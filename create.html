@@ -4,38 +4,96 @@
 		<title>创建</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<style type="text/css">
+			input[type="text"] {
+				border: 1px solid #000;
+				margin: 10px 10px 10px 10px;
+				font-size: 16px;
+				height: 24px;
+				width: 100px;
+			}
+			#submit {
+				display: block;
+				width: 60%;
+				border: 1px solid #ff5000;
+				padding: 6px 0;
+				text-align: center;
+				border-radius: 34px;
+				margin: 14px auto 24px;
+				color: #ff5000;
+			}
+		</style>
 		<script type="text/javascript" src="jquery.min.js"></script>
 	</head>
 	<body>
 		<div><label>id</label><input id="game_id" type="text"></div>
 		<div id="disable">
 			<label>封盘时间</label>
-			<input type="text" name="year" value="2018">
-			<label>年</label>
-			<input type="text" name="month" value="4">
-			<label>月</label>
-			<input type="text" name="date">
-			<label>日</label>
-			<input type="text" name="hour" value="14">
-			<label>时</label>
-			<input type="text" name="minute" value="30">
-			<label>分</label>
+			<div>
+				<input type="text" name="year">
+				<label>年</label>
+			</div>
+			<div>
+				<input type="text" name="month">
+				<label>月</label>
+			</div>
+			<div>
+				<input type="text" name="date">
+				<label>日</label>
+			</div>
+			<div>
+				<input type="text" name="hour">
+				<label>时</label>
+			</div>
+			<div>
+				<input type="text" name="minute">
+				<label>分</label>
+			</div>
 		</div>
 		<div id="close">
 			<label>结束时间</label>
-			<input type="text" name="year" value="2018">
-			<label>年</label>
-			<input type="text" name="month" value="4">
-			<label>月</label>
-			<input type="text" name="date">
-			<label>日</label>
-			<input type="text" name="hour" value="15">
-			<label>时</label>
-			<input type="text" name="minute" value="30">
-			<label>分</label>
+			<div>
+				<input type="text" name="year">
+				<label>年</label>
+			</div>
+			<div>
+				<input type="text" name="month">
+				<label>月</label>
+			</div>
+			<div>
+				<input type="text" name="date">
+				<label>日</label>
+			</div>
+			<div>
+				<input type="text" name="hour">
+				<label>时</label>
+			</div>
+			<div>
+				<input type="text" name="minute">
+				<label>分</label>
+			</div>
 		</div>
 		<a id="submit">创建</a>
 		<script type="text/javascript">
+			var _zeroFixed = function(v) {
+				if (v < 10) {
+					return '0' + v;
+				}
+				return '' + v;
+			};
+			var initDefaultValues = function() {
+				var d = new Date();
+				var year = d.getFullYear();
+				var month = d.getMonth() + 1;
+				var date = d.getDate();
+				$('#game_id').val(year + _zeroFixed(month) + _zeroFixed(date));
+				$('input[name="year"]').val(year);
+				$('input[name="month"]').val(month);
+				$('input[name="date"]').val(date);
+				$('input[name="minute"]').val(30);
+				$('#disable input[name="hour"]').val(14);
+				$('#close input[name="hour"]').val(15);
+			};
 			var getTime = function(type) {
 				var year = $('#' + type + ' input[name="year"]').val();
 				var month = parseInt($('#' + type + ' input[name="month"]').val()) - 1;
@@ -45,6 +103,7 @@
 				var d = new Date(year, month, date, hour, minute);
 				return d.getTime();
 			};
+			initDefaultValues();
 			$('#submit').click(function() {
 
 				var arr = $('input[type="text"]');
